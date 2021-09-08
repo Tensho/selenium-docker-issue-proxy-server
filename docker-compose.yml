@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  client:
+    build: .
+    command: ruby main.rb
+    environment:
+      - SELENIUM_HOST=selenium-chrome
+      - SELENIUM_PORT=4444
+    volumes:
+      - ./:/code
+    tty: true
+    stdin_open: true
+    depends_on:
+      - selenium-chrome
+
+  selenium-chrome:
+    image: "selenium/standalone-chrome:4.0.0-rc-1-prerelease-20210804"
+    environment:
+      # Configure proxy for Chrome browser
+      - HTTP_PROXY=http://mitmproxy:8080
+      - HTTPS_PROXY=https://mitmproxy:8080
+    ports:
+      - "4444:4444"
+    shm_size: '2gb'
+    depends_on:
+      - mitmproxy
+
+  mitmproxy:
+    image: mitmproxy/mitmproxy:7.0.2
+    command: mitmdump --verbose --modify-headers /~q/foo/bar
