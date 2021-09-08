@@ -7,6 +7,8 @@ services:
     environment:
       - SELENIUM_HOST=selenium-chrome
       - SELENIUM_PORT=4444
+      - HTTP_PROXY_HOST=selenium-chrome
+      - HTTP_PROXY_PORT=8080
     volumes:
       - ./:/code
     tty: true
@@ -16,10 +18,10 @@ services:
 
   selenium-chrome:
     image: "selenium/standalone-chrome:4.0.0-rc-1-prerelease-20210804"
-    environment:
+    # environment:
       # Configure proxy for Chrome browser
-      - HTTP_PROXY=http://mitmproxy:8080
-      - HTTPS_PROXY=https://mitmproxy:8080
+      # - HTTP_PROXY=http://mitmproxy:8080
+      # - HTTPS_PROXY=https://mitmproxy:8080
     ports:
       - "4444:4444"
     shm_size: '2gb'
