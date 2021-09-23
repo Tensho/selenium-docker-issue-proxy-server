@@ -7,7 +7,7 @@ services:
     environment:
       - SELENIUM_HOST=selenium-chrome
       - SELENIUM_PORT=4444
-      - HTTP_PROXY_HOST=selenium-chrome
+      - HTTP_PROXY_HOST=mitmproxy
       - HTTP_PROXY_PORT=8080
     volumes:
       - ./:/code
